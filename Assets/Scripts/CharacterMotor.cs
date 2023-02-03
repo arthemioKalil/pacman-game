@@ -23,6 +23,8 @@ public class CharacterMotor : MonoBehaviour
 
     private Vector2 _boxSize;
 
+    private bool gizmosOn = false;
+
     public Direction CurrentMoveDirection
     {
         get
@@ -79,6 +81,7 @@ public class CharacterMotor : MonoBehaviour
 
     private void Start()
     {
+        gizmosOn = true;
         _rigidbody = GetComponent<Rigidbody2D>();
         _boxSize = GetComponent<BoxCollider2D>().size;
     }
@@ -165,6 +168,9 @@ public class CharacterMotor : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (!gizmosOn)
+            return;
+
         Gizmos.color = Color.magenta;
         if (Physics2D.BoxCast(_rigidbody.position, _boxSize, 0, _desiredMovementDirection, 1f, 1 << LayerMask.NameToLayer("Level")))
             Gizmos.DrawLine(transform.position, Physics2D.BoxCast(_rigidbody.position, _boxSize, 0, _desiredMovementDirection, 1f, 1 << LayerMask.NameToLayer("Level")).point);
