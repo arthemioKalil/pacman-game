@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26423bdb2f8eb3c448417529932ae331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  VulnerabilityEndingTime: 3
 --- !u!114 &3916098450639256675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,7 +240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77faebb3ca426a0439fe4c85886a6704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CharacterMotor: {fileID: 0}
-  GhostAi: {fileID: 3855634033842045610}
+  CharacterMotor: {fileID: 8611057302439665680}
+  GhostAI: {fileID: 3855634033842045610}
   Animator: {fileID: 1715956880}
   GhostType: 0
