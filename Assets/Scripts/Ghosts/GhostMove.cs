@@ -6,17 +6,24 @@ public class GhostMove : MonoBehaviour
 {
     public event Action OnUpdateMoveTarget;
 
+    public CharacterMotor CharacterMotor { get => _motor; }
+
     private CharacterMotor _motor;
     private Vector2 _boxSize;
     private Vector2 _targetMoveLocation;
+    private bool _allowReverseDirection;
 
-    public CharacterMotor CharacterMotor { get => _motor; }
+    public void AllowReverseDirection()
+    {
+        _allowReverseDirection = true;
+    }
+
 
     public void SetTargetMoveLocation(Vector2 targetMoveLocation)
     {
         _targetMoveLocation = targetMoveLocation;
     }
-    void Awake()
+    void Start()
     {
         _motor = GetComponent<CharacterMotor>();
         _boxSize = GetComponent<BoxCollider2D>().size;
@@ -24,6 +31,8 @@ public class GhostMove : MonoBehaviour
         _motor.OnAlignedWithGrid += CharacterMotor_OnAlignedWithGrid;
 
         CharacterMotor_OnAlignedWithGrid();
+
+        _allowReverseDirection = false;
     }
 
     private void CharacterMotor_OnAlignedWithGrid()
@@ -46,6 +55,8 @@ public class GhostMove : MonoBehaviour
 
 
         _motor.SetMoveDirection(finalDirection);
+
+        _allowReverseDirection = false;
     }
 
     private void UpdateFinalDirection(Direction direction, Vector3 offSet, ref float closestDistance, ref Direction finalDirection)
@@ -66,16 +77,16 @@ public class GhostMove : MonoBehaviour
         switch (direction)
         {
             case Direction.Up:
-                return !Physics2D.BoxCast(transform.position, _boxSize, 0, Vector2.up, 1f, _motor.CollisionLayerMask) && _motor.CurrentMoveDirection != Direction.Down;
+                return !Physics2D.BoxCast(transform.position, _boxSize, 0, Vector2.up, 1f, _motor.CollisionLayerMask) && (_motor.CurrentMoveDirection != Direction.Down || _allowReverseDirection);
 
             case Direction.Left:
-                return !Physics2D.BoxCast(transform.position, _boxSize, 0, Vector2.left, 1f, _motor.CollisionLayerMask) && _motor.CurrentMoveDirection != Direction.Right;
+                return !Physics2D.BoxCast(transform.position, _boxSize, 0, Vector2.left, 1f, _motor.CollisionLayerMask) && (_motor.CurrentMoveDirection != Direction.Right || _allowReverseDirection);
 
             case Direction.Down:
-                return !Physics2D.BoxCast(transform.position, _boxSize, 0, Vector2.down, 1f, _motor.CollisionLayerMask) && _motor.CurrentMoveDirection != Direction.Up;
+                return !Physics2D.BoxCast(transform.position, _boxSize, 0, Vector2.down, 1f, _motor.CollisionLayerMask) && (_motor.CurrentMoveDirection != Direction.Up || _allowReverseDirection);
 
             case Direction.Right:
-                return !Physics2D.BoxCast(transform.position, _boxSize, 0, Vector2.right, 1f, _motor.CollisionLayerMask) && _motor.CurrentMoveDirection != Direction.Left;
+                return !Physics2D.BoxCast(transform.position, _boxSize, 0, Vector2.right, 1f, _motor.CollisionLayerMask) && (_motor.CurrentMoveDirection != Direction.Left || _allowReverseDirection);
         }
 
         return false;
