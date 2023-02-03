@@ -9,11 +9,14 @@ public class GhostMove : MonoBehaviour
     private CharacterMotor _motor;
     private Vector2 _boxSize;
     private Vector2 _targetMoveLocation;
+
+    public CharacterMotor CharacterMotor { get => _motor; }
+
     public void SetTargetMoveLocation(Vector2 targetMoveLocation)
     {
         _targetMoveLocation = targetMoveLocation;
     }
-    void Start()
+    void Awake()
     {
         _motor = GetComponent<CharacterMotor>();
         _boxSize = GetComponent<BoxCollider2D>().size;
