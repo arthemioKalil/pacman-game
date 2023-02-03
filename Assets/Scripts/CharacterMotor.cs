@@ -17,12 +17,19 @@ public class CharacterMotor : MonoBehaviour
 
 
     public float MoveSpeed;
+    public LayerMask CollisionLayerMask
+    {
+        get => _collisionLayerMask;
+    }
+
     private Vector2 _desiredMovementDirection;
     private Vector2 _currentMovementDirection;
 
     private Rigidbody2D _rigidbody;
 
     private Vector2 _boxSize;
+
+    private LayerMask _collisionLayerMask;
 
     private bool gizmosOn = false;
 
@@ -83,6 +90,7 @@ public class CharacterMotor : MonoBehaviour
     private void Start()
     {
         gizmosOn = true;
+        _collisionLayerMask = LayerMask.GetMask(new string[] { "Level", "Gates" });
         _rigidbody = GetComponent<Rigidbody2D>();
         _boxSize = GetComponent<BoxCollider2D>().size;
     }
@@ -140,7 +148,7 @@ public class CharacterMotor : MonoBehaviour
         Physics2D.SyncTransforms(); //atualiza o rigidbody para ficar com a mesma posição do transform que alteramos ali em cima
 
         //verifica alinhamento 
-        if (_rigidbody.position.x == Mathf.CeilToInt(_rigidbody.position.x) && _rigidbody.position.y == Mathf.CeilToInt(_rigidbody.position.y))
+        if (_rigidbody.position.x == Mathf.CeilToInt(_rigidbody.position.x) && _rigidbody.position.y == Mathf.CeilToInt(_rigidbody.position.y) || _currentMovementDirection == Vector2.zero)
         {
             OnAlignedWithGrid?.Invoke();
 
@@ -149,14 +157,14 @@ public class CharacterMotor : MonoBehaviour
                 //bit shift operation
                 //00100000 = 1024 << 1 -> está pegando o "1" do bit e movendo um pra esquerda
                 //Assim que a layer funciona, por bits(32)
-                if (!Physics2D.BoxCast(_rigidbody.position, _boxSize, 0, _desiredMovementDirection, 1f, 1 << LayerMask.NameToLayer("Level")))
+                if (!Physics2D.BoxCast(_rigidbody.position, _boxSize, 0, _desiredMovementDirection, 1f, CollisionLayerMask))
                 {
                     _currentMovementDirection = _desiredMovementDirection;
                     OnDirectionChanged?.Invoke(CurrentMoveDirection);
                 }
             }
 
-            if (Physics2D.BoxCast(_rigidbody.position, _boxSize, 0, _currentMovementDirection, 1f, 1 << LayerMask.NameToLayer("Level")))
+            if (Physics2D.BoxCast(_rigidbody.position, _boxSize, 0, _currentMovementDirection, 1f, CollisionLayerMask))
             {
                 _currentMovementDirection = Vector2.zero;
                 OnDirectionChanged?.Invoke(CurrentMoveDirection);
