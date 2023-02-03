@@ -13,6 +13,7 @@ public enum Direction
 public class CharacterMotor : MonoBehaviour
 {
     public event Action<Direction> OnDirectionChanged;
+    public event Action OnAlignedWithGrid;
 
 
     public float MoveSpeed;
@@ -141,6 +142,8 @@ public class CharacterMotor : MonoBehaviour
         //verifica alinhamento 
         if (_rigidbody.position.x == Mathf.CeilToInt(_rigidbody.position.x) && _rigidbody.position.y == Mathf.CeilToInt(_rigidbody.position.y))
         {
+            OnAlignedWithGrid?.Invoke();
+
             if (_currentMovementDirection != _desiredMovementDirection)
             {
                 //bit shift operation
