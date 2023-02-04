@@ -16,6 +16,7 @@ public class CharacterMotor : MonoBehaviour
     public event Action OnAlignedWithGrid;
     public event Action OnResetPosition;
     public event Action OnDisabled;
+    public event Action<float> OnSpeedSpecial;
 
 
     public float MoveSpeed;
@@ -34,6 +35,10 @@ public class CharacterMotor : MonoBehaviour
     private LayerMask _collisionLayerMask;
 
     private Vector3 _initialPosition;
+
+    public float NaturalSpeed
+    { get => _naturalSpeed; }
+    private float _naturalSpeed;
 
     private bool gizmosOn = false;
 
@@ -69,6 +74,11 @@ public class CharacterMotor : MonoBehaviour
         }
     }
 
+    public void SetMotorSpeed(float hyperSpeed, float duration)
+    {
+        MoveSpeed = hyperSpeed;
+        OnSpeedSpecial?.Invoke(duration);
+    }
     public void SetMoveDirection(Direction newMoveDirection)
     {
         switch (newMoveDirection)
@@ -122,6 +132,7 @@ public class CharacterMotor : MonoBehaviour
         _boxSize = GetComponent<BoxCollider2D>().size;
 
         _initialPosition = transform.position;
+        _naturalSpeed = MoveSpeed;
     }
 
     private void FixedUpdate()
