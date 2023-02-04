@@ -8,10 +8,20 @@ public class Collectible : MonoBehaviour
     public int Score;
 
     public event Action<int, Collectible> OnCollected;
+    public event Action<Collectible, GameObject> OnSpecialFruits;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        OnCollected?.Invoke(Score, this);
+        if (gameObject.CompareTag("Cherry") || gameObject.CompareTag("Strawberry"))
+        {
+            Debug.Log("CollectibleEvent");
+            OnSpecialFruits?.Invoke(this, gameObject);
+        }
+        else
+        {
+            OnCollected?.Invoke(Score, this);
+
+        }
         Destroy(gameObject);
     }
 }
