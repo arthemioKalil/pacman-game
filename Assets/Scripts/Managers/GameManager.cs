@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,8 +20,7 @@ public class GameManager : MonoBehaviour
     private GameState _gameState;
     private int _victoryCount;
 
-    private GhostAI[] _allGhosts;
-    private CharacterMotor _pacmanMotor;
+    private List<IMovableCharacter> _allMovableCharacters;
 
     private GhostHouse _ghostHouse;
 
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         var allColletibles = FindObjectsOfType<Collectible>();
-
+        
         _victoryCount = 0;
         foreach (var collectible in allColletibles)
         {
@@ -45,9 +45,12 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        _allMovableCharacters = new List<IMovableCharacter>();
+
         var pacman = GameObject.FindWithTag("Player");
-        _pacmanMotor = pacman.GetComponent<CharacterMotor>();
-        _allGhosts = FindObjectsOfType<GhostAI>();
+        _allMovableCharacters.Add(pacman.GetComponent<PacmanInput>());
+        var _allGhosts = FindObjectsOfType<GhostAI>();
+        _allMovableCharacters.AddRange(_allGhosts);
         StopAllCharacters();
 
         _ghostHouse = FindObjectOfType<GhostHouse>();
@@ -70,7 +73,7 @@ public class GameManager : MonoBehaviour
 
     private void Collectible_OnCollected(int _, Collectible collectible)
     {
-        //_ significa que é um parametro descarte
+        //_ significa que ï¿½ um parametro descarte
         _victoryCount--;
 
         if (_victoryCount <= 0)
@@ -82,37 +85,29 @@ public class GameManager : MonoBehaviour
             OnVictory?.Invoke();
 
         }
-        //como foi feito uma inscrição desse collectible lá em cima, quando é removido, é bom fazer a desubscrição tambem
+        //como foi feito uma inscriï¿½ï¿½o desse collectible lï¿½ em cima, quando ï¿½ removido, ï¿½ bom fazer a desubscriï¿½ï¿½o tambem
         collectible.OnCollected -= Collectible_OnCollected;
     }
     private void StartAllCharacters()
     {
-        _pacmanMotor.enabled = true;
-
-        foreach (var ghost in _allGhosts)
+        foreach (var character in _allMovableCharacters)
         {
-            ghost.StartMoving();
+            character.StartMoving();
         }
     }
     private void StopAllCharacters()
     {
-        _pacmanMotor.enabled = false;
-
-        foreach (var ghost in _allGhosts)
+        foreach (var character in _allMovableCharacters)
         {
-            ghost.StopMoving();
+            character.StopMoving();
         }
     }
-    private void ResetAllCharacters()
+    private void ResetAllCharactersPositions()
     {
-        _pacmanMotor.ResetPosition();
-
-        foreach (var ghost in _allGhosts)
+        foreach (var character in _allMovableCharacters)
         {
-            ghost.Reset();
+            character.ResetPosition();
         }
-
-        StartAllCharacters();
     }
 
     void Update()
@@ -131,7 +126,8 @@ public class GameManager : MonoBehaviour
                     }
                     else
                     {
-                        ResetAllCharacters();
+                        ResetAllCharactersPositions();
+                        StartAllCharacters();
                         _gameState = GameState.Playing;
                     }
                 }
