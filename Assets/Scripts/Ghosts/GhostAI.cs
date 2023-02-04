@@ -10,7 +10,7 @@ public enum GhostState
 }
 
 [RequireComponent(typeof(GhostMove))]
-public class GhostAI : MonoBehaviour
+public class GhostAI : MonoBehaviour, IMovableCharacter
 {
     public event Action<GhostState> OnGhostStateChanged;
 
@@ -57,7 +57,7 @@ public class GhostAI : MonoBehaviour
     {
         _ghostMove.CharacterMotor.enabled = false;
     }
-    public void Reset()
+    public void ResetPosition()
     {
         _ghostMove.CharacterMotor.ResetPosition();
 
