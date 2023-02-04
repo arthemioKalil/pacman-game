@@ -10,7 +10,10 @@ public class ScoreManager : MonoBehaviour
 
     private int _highScore;
 
-    public int CurrentScore { get => _currentScore; }
+    public int CurrentScore
+    {
+        get => _currentScore;
+    }
     public int HightScore { get => _highScore; }
 
     private void Awake()
@@ -26,7 +29,20 @@ public class ScoreManager : MonoBehaviour
             collectible.OnCollected += Collectible_OnCollected;
         }
 
+        var eatGhost = FindObjectOfType<EatGhost>();
+        eatGhost.OnEatGhost += EatGhost_OnEatGhost;
+    }
 
+    private void EatGhost_OnEatGhost(int totalScore)
+    {
+        _currentScore += totalScore;
+        if (_currentScore >= _highScore)
+        {
+            _highScore = _currentScore;
+            OnHighScoreChanged?.Invoke(_highScore);
+        }
+
+        OnScoreChanged?.Invoke(_currentScore);
     }
 
     private void Collectible_OnCollected(int score, Collectible collectible)
