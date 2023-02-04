@@ -157,6 +157,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1349281547}
   - component: {fileID: 1349281546}
+  - component: {fileID: 1217749659}
   m_Layer: 11
   m_Name: SpeedLimitLeft
   m_TagString: Untagged
@@ -205,6 +206,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 7, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1217749659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1349281544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b644db93ae6e7b4ca778f3125fa760a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RestrictVelocity: 3.5
 --- !u!1 &1438601003
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,6 +229,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1438601006}
   - component: {fileID: 1438601005}
+  - component: {fileID: 1348022122}
   m_Layer: 11
   m_Name: SpeedLimitRight
   m_TagString: Untagged
@@ -263,6 +278,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 7, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1348022122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438601003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b644db93ae6e7b4ca778f3125fa760a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RestrictVelocity: 3.5
 --- !u!1 &4676070523175669446
 GameObject:
   m_ObjectHideFlags: 0

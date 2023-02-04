@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2283740690488131619}
   - component: {fileID: 8059516602946254901}
   - component: {fileID: 3805678154719878290}
+  - component: {fileID: 8812336406041292626}
   m_Layer: 10
   m_Name: BaseCollectible(Dot)
   m_TagString: Untagged
@@ -141,3 +142,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsVictoryCondition: 1
   Score: 10
+--- !u!114 &8812336406041292626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2283740690488131621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 634eb0b4ef7272140a0a3c24d6a9972f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
