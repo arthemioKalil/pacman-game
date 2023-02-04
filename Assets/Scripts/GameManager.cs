@@ -38,8 +38,11 @@ public class GameManager : MonoBehaviour
         _victoryCount = 0;
         foreach (var collectible in allColletibles)
         {
-            _victoryCount++;
-            collectible.OnCollected += Collectible_OnCollected;
+            if (collectible.IsVictoryCondition)
+            {
+                _victoryCount++;
+                collectible.OnCollected += Collectible_OnCollected;
+            }
         }
 
         var pacman = GameObject.FindWithTag("Player");
