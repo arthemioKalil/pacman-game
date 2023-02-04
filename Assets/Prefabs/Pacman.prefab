@@ -137,6 +137,8 @@ GameObject:
   - component: {fileID: 7786777576430502608}
   - component: {fileID: 7786777576430502609}
   - component: {fileID: 1069205030}
+  - component: {fileID: 2120392285}
+  - component: {fileID: 2120392286}
   m_Layer: 8
   m_Name: Pacman
   m_TagString: Player
@@ -231,7 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adcb0c7d529cbae4fae8473105773f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 6
+  MoveSpeed: 5
 --- !u!114 &1069205030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,3 +247,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Lives: 3
+--- !u!114 &2120392285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7786777578098180152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e61db0b03f70b4d92caab048e36015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EatGhostValue: 200
+--- !u!114 &2120392286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7786777578098180152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62e15b403eac0dd439115aa3fb712f91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
