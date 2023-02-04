@@ -17,11 +17,10 @@ public class Collectible : MonoBehaviour
             Debug.Log("CollectibleEvent");
             OnSpecialFruits?.Invoke(this, gameObject);
         }
-        else
-        {
-            OnCollected?.Invoke(Score, this);
 
-        }
+        OnCollected?.Invoke(Score, this);
+
+
         Destroy(gameObject);
     }
 }
